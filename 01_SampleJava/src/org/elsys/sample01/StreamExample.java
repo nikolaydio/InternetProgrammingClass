@@ -1,9 +1,14 @@
 package org.elsys.sample01;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
 
 public class StreamExample {
 	public final static String END_READER = "END";
@@ -12,7 +17,9 @@ public class StreamExample {
 		//inputStreamExample();
 		//bufferedReaderExample();
 		//readLinecountLetterInLine();
-		readLineGetLength();
+		//readLineGetLength();
+		//readFromUrl();
+		readFromFile();
 	}
 	
 	public static void inputStreamExample() throws IOException {
@@ -25,6 +32,42 @@ public class StreamExample {
 		final byte a[] = new byte[3];
 		input.read(a);
 		System.out.println(new String(a));
+	}
+
+	private static void readFromFile() throws IOException {
+		final File file = new File("/home/nickie/test.txt");
+		final InputStream input = new FileInputStream(file);
+		final InputStreamReader inputStreamReader = new InputStreamReader(input, Charset.forName("UTF-8"));
+		final BufferedReader reader = new BufferedReader(inputStreamReader);
+		
+		try {
+			String nextLine;
+			while((nextLine = reader.readLine()) != null) {
+				System.out.println(nextLine);
+			}
+		} finally {
+			reader.close();
+		}
+		
+		
+	}
+	
+	private static void readFromUrl() throws IOException {
+		final URL url = new URL("http://google.com");
+		final InputStream input = url.openStream();
+		final InputStreamReader inputStreamReader = new InputStreamReader(input, Charset.forName("UTF-8"));
+		final BufferedReader reader = new BufferedReader(inputStreamReader);
+		
+		try {
+			String nextLine;
+			while((nextLine = reader.readLine()) != null) {
+				System.out.println(nextLine);
+			}
+		} finally {
+			reader.close();
+		}
+		
+		
 	}
 	
 	public static void bufferedReaderExample() throws IOException {
