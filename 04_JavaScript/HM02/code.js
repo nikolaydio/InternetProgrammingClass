@@ -28,10 +28,10 @@ $(document).ready(function() {
 			var confirmation = confirm('remove post?');
 			if(confirmation) {
 				$.ajax("http://jsonplaceholder.typicode.com/posts/" + id, {
-					method: 'DELETE',
+					method: 'DELETE'
 				}).then(function(data) {
 					$(element).remove();
-				})
+				});
 			}
 		});
 		$("#posts").append(element);
@@ -76,6 +76,17 @@ $(document).ready(function() {
 		});
 	});
 
+	//Task 17+. Filtering
 	$('ul#posts').before('<input id="filterInput" type="text"/>');
-	
+
+	$('input#filterInput').change(function() {
+		$.ajax("http://jsonplaceholder.typicode.com/posts?userId=" + $(this).val(), {
+			method: "GET"
+		}).then(function(ret_data) {
+			$("#posts").html("")
+			$.each(ret_data, function(key, val) {
+				add_element(val.id, val.title);
+			});
+		})
+	})
 });
