@@ -75,4 +75,7 @@ $(document).ready(function() {
 
 		});
 	});
+
+	$('ul#posts').before('<input id="filterInput" type="text"/>');
+	
 });
